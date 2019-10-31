@@ -50,6 +50,9 @@ class GameFragment : Fragment() {
                 container,
                 false
         )
+        // Set the viewmodel for databinding - this allows the bound layout access
+        // to all the data in the ViewModel
+
 
 //        Log.i("GameFragment", "Called ViewModelProviders.of")
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
@@ -57,9 +60,12 @@ class GameFragment : Fragment() {
         viewModel.resetList()
         viewModel.nextWord()
 
-        binding.correctButton.setOnClickListener { onCorrect() }
-        binding.skipButton.setOnClickListener { onSkip() }
-        binding.endGameButton.setOnClickListener { onEndGame() }
+        binding.gameViewModel = viewModel
+
+        //comment because change to binding with viewModel and liveData
+//        binding.correctButton.setOnClickListener { onCorrect() }
+//        binding.skipButton.setOnClickListener { onSkip() }
+//        binding.endGameButton.setOnClickListener { onEndGame() }
 
         viewModel.score.observe(this, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
@@ -82,21 +88,22 @@ class GameFragment : Fragment() {
 
     }
 
-    fun onSkip() {
-        viewModel.onSkip()
-//        updateWordText()
-//        updateScoreText()
-    }
-
-    fun onCorrect() {
-        viewModel.onCorrect()
-//        updateScoreText()
-//        updateWordText()
-    }
-
-    private fun onEndGame() {
-        gameFinished()
-    }
+    //comment because change to binding with viewModel and liveData
+//    fun onSkip() {
+//        viewModel.onSkip()
+////        updateWordText()
+////        updateScoreText()
+//    }
+//
+//    fun onCorrect() {
+//        viewModel.onCorrect()
+////        updateScoreText()
+////        updateWordText()
+//    }
+//
+//    private fun onEndGame() {
+//        gameFinished()
+//    }
 
     private fun gameFinished() {
         Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()

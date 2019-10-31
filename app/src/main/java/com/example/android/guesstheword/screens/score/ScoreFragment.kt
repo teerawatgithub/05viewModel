@@ -50,6 +50,7 @@ class ScoreFragment : Fragment() {
                 container,
                 false
         )
+
         viewModelFactory = ScoreViewModelFactory(ScoreFragmentArgs.fromBundle(arguments!!).score)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScoreViewModel::class.java)
 //        binding.scoreText.text = viewModel.score.toString()
@@ -63,7 +64,12 @@ class ScoreFragment : Fragment() {
             }
         })
 
-        binding.playAgainButton.setOnClickListener {  viewModel.onPlayAgain()  }
+        //have to after viewModel = ViewModelProviders.of(------------)^ line 55
+        binding.scoreViewModel = viewModel
+
+        //comment because change to binding with viewModel and liveData
+//        binding.playAgainButton.setOnClickListener {  viewModel.onPlayAgain()  }
+
 
         return binding.root
     }
