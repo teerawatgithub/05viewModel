@@ -69,6 +69,10 @@ class GameFragment : Fragment() {
             binding.wordText.text = newWord
         })
 
+        viewModel.eventGameFinish.observe(this, Observer<Boolean> { hasFinished ->
+            if (hasFinished) gameFinished()
+        })
+
 
 //        updateScoreText()
 //        updateWordText()
@@ -99,6 +103,7 @@ class GameFragment : Fragment() {
         val action = GameFragmentDirections.actionGameToScore()
         action.score = viewModel.score.value?:0
         NavHostFragment.findNavController(this).navigate(action)  //Navigate ตัวเอง
+        viewModel.onGameFinishComplete()
     }
 
 //    /** Methods for updating the UI **/
