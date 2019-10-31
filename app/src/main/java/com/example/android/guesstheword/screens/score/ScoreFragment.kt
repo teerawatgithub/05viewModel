@@ -54,9 +54,11 @@ class ScoreFragment : Fragment() {
         viewModelFactory = ScoreViewModelFactory(ScoreFragmentArgs.fromBundle(arguments!!).score)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScoreViewModel::class.java)
 //        binding.scoreText.text = viewModel.score.toString()
-        viewModel.score.observe(this, Observer { newScore ->
-            binding.scoreText.text = newScore.toString()
-        })
+
+//        viewModel.score.observe(this, Observer { newScore ->                      remove because 5.3.5 step 2 or VDO 5.3 --- 18.12 minits
+//            binding.scoreText.text = newScore.toString()
+//        })
+
         viewModel.eventPlayAgain.observe(this, Observer { playAgain ->
             if (playAgain) {
                 findNavController().navigate(ScoreFragmentDirections.actionRestart())
@@ -66,6 +68,7 @@ class ScoreFragment : Fragment() {
 
         //have to after viewModel = ViewModelProviders.of(------------)^ line 55
         binding.scoreViewModel = viewModel
+        binding.lifecycleOwner = this
 
         //comment because change to binding with viewModel and liveData
 //        binding.playAgainButton.setOnClickListener {  viewModel.onPlayAgain()  }
